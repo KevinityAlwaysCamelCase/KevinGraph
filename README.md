@@ -1,55 +1,45 @@
-<<<<<<< HEAD
-# Welcome to your Expo app 👋
+# KevinGraph Backend
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is the FastAPI server that powers the plotting functionality for the **KevinGraph** frontend. It receives a math expression (like `cos(x)` or `x^2 + 3*x`) and returns a base64-encoded image of the graph.
 
-## Get started
+---
 
-1. Install dependencies
+## Getting Started
 
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### 1. Clone the Repository
 
 ```bash
-npm run reset-project
+git clone https://github.com/KevinityAlwaysCamelCase/KevinGraph.git
+cd KevinGraph/backend
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. install dependencies
+copy paste this in your terminal
+```bash
+pip install -r requirements.txt
+```
+or manually
+```bash
+pip install fastapi uvicorn numpy matplotlib sympy
+```
+### 3. run the server
+input this in your terminal
+```bash
+uvicorn index:app --reload
+```
+##  API endpoint
+Form field: expr (e.g. x**2, cos(x), or 3)
 
-## Learn more
+Returns: { "image": "<base64 string>" }
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-=======
-# KevinGraph
-A graphing calculator
->>>>>>> eec5316e9098b5e407686624ca3d92c52c0a3e7d
+Example using curl:
+```bash
+curl -X POST -F "expr=cos(x)" http://localhost:8000/plot
+```
+## How It Works
+<ul>
+   <li>Parses the expression using sympy.</li>
+   <li>Converts it into a NumPy-compatible function.</li>
+   <li>Plots the result using matplotlib.</li>
+   <li>Encodes the plot as a base64 PNG and returns it.</li>
+</ul>
