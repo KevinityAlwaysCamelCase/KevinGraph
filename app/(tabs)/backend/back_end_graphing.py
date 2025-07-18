@@ -9,7 +9,6 @@ from sympy import symbols, lambdify, sympify
 
 app = FastAPI()
 
-# Allow CORS from all origins (for testing)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -27,14 +26,15 @@ async def plot(expr: str = Form(...)):
         x_vals = np.linspace(-10, 10, 400)
         y_vals = func(x_vals)
 
+        if np.isscalar(y_vals):
+            y_vals = np.full_like(x_vals, y_vals)
+
         # Plot
         fig, ax = plt.subplots()
         ax.plot(x_vals, y_vals, label=f"y = {expr}")
-        ax.set_title("Function Plot")
         ax.grid(True)
         ax.legend()
 
-        # Save to base64
         buf = io.BytesIO()
         plt.savefig(buf, format='png')
         plt.close(fig)
