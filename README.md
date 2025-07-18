@@ -28,9 +28,9 @@ input this in your terminal
 uvicorn index:app --reload
 ```
 ##  API endpoint
-Form field: expr (e.g. x**2, cos(x), or 3)
+Form field: expr (e.g. x^2, cos(x), or 3*x)
 
-Returns: { "image": "<base64 string>" }
+Returns: { "image": "base64 string" }
 
 Example using curl:
 ```bash
